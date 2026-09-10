@@ -42,6 +42,7 @@ organize/
 
 ```bash
 cp server/.env.example server/.env
+cp client/.env.example client/.env
 ```
 
 Update `server/.env` as needed:
@@ -49,6 +50,12 @@ Update `server/.env` as needed:
 ```env
 PORT=5000
 MONGO_URI=mongodb://127.0.0.1:27017/resource_organizer
+```
+
+For production frontend, set API URL in `client/.env`:
+
+```env
+VITE_API_BASE_URL=https://<your-backend-domain>/api
 ```
 
 ### 2) Install dependencies (both apps)
@@ -80,6 +87,37 @@ npm run dev
 
 ---
 
+## Deploy Frontend to GitHub Pages
+
+GitHub Pages hosts only the `client/` frontend.
+Backend must be deployed separately (Render/Railway/Fly/etc.).
+
+1. Ensure Vite base is set to repo path (`/organize/`) ✅
+2. Set production API URL:
+
+```bash
+cp client/.env.example client/.env
+# edit client/.env and set VITE_API_BASE_URL
+```
+
+3. Deploy from `client/`:
+
+```bash
+cd client
+npm install
+npm run deploy
+```
+
+4. In GitHub repo settings:
+   - Go to **Settings → Pages**
+   - Source: **Deploy from a branch**
+   - Branch: **gh-pages** / root
+
+Site URL (after publish):
+- `https://mtarvecha660-lgtm.github.io/organize/`
+
+---
+
 ## Useful Scripts
 
 From root:
@@ -89,6 +127,10 @@ From root:
 - `npm run dev:client` → run frontend only
 - `npm run install:all` → install server/client deps
 - `npm run seed` → seed default sections
+
+From `client/`:
+
+- `npm run deploy` → deploy frontend to `gh-pages`
 
 ---
 
